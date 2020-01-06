@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
 
     'event',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
 

@@ -1,7 +1,9 @@
 from django.db import models
+from users.models import User
 
 
 class Event(models.Model):
+    user = models.ForeignKey(User, related_name='user_events', on_delete=models.CASCADE)
     groom = models.CharField(max_length=100)
     bride = models.CharField(max_length=100)
     tag_line = models.CharField(max_length=300)
