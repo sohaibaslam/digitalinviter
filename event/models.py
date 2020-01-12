@@ -11,7 +11,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     invite_description = models.CharField(max_length=1000)
     quote = models.CharField(max_length=2000)
-    gmap_link = models.CharField(max_length=1000)
+    gmap_location = models.CharField(max_length=1000)
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
