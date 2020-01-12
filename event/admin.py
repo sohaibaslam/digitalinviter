@@ -12,6 +12,7 @@ class EventHostAdmin(admin.TabularInline):
 
 
 class EventAdmin(admin.ModelAdmin):
+    model = Event
     inlines = [
         EventTimelineAdmin,
         EventHostAdmin
