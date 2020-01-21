@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet
 from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
+from themes.views import ThemeViewSet
 
 
 router = DefaultRouter()
@@ -28,6 +29,7 @@ router.register(r'users', UserViewSet)
 router.register(r'event_timeline', EventTimelineViewSet)
 router.register(r'event_host', EventHostViewSet)
 router.register(r'rsvp', RSVPViewSet)
+router.register(r'theme', ThemeViewSet)
 
 
 urlpatterns = [

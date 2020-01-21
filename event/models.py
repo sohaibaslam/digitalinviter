@@ -1,9 +1,12 @@
 from django.db import models
+
 from users.models import User
+from themes.models import Theme
 
 
 class Event(models.Model):
     user = models.ForeignKey(User, related_name='user_events', on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, related_name='theme_events', on_delete=models.DO_NOTHING, null=True, default=None)
     groom = models.CharField(max_length=100)
     bride = models.CharField(max_length=100)
     tag_line = models.CharField(max_length=300)
