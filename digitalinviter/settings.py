@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'users',
     'event',
     'rsvp',
+    'themes',
 ]
 
 MIDDLEWARE = [
