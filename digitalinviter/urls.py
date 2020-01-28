@@ -21,6 +21,7 @@ from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet
 from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
 from themes.views import ThemeViewSet
+from users.views import FacebookLogin
 
 
 router = DefaultRouter()
@@ -39,4 +40,5 @@ urlpatterns = [
     re_path(r'^api-auth/', include('rest_framework.urls')),
     re_path(r'^rest-auth/', include('rest_auth.urls')),
     re_path(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    re_path(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login')
 ]
