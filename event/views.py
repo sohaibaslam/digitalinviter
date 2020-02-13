@@ -1,4 +1,10 @@
+import json
+
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import api_view, action
+from rest_framework.response import Response
+from django.db import transaction
+from django.contrib.auth.decorators import login_required
 
 
 from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer
@@ -9,34 +15,40 @@ class EventViewSet(ModelViewSet):
     queryset = Event.objects.filter(is_active=True)
     serializer_class = EventSerializer
 
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
-        event = super().create(request, *args, **kwargs)
+        response = super().create(request, *args, **kwargs)
+        event = Event.objects.get(id=response.data['id'])
+
         event_timeline = request.data.get('event_timeline')
         event_hosts = request.data.get('event_hosts')
 
-        for timeline in event_timeline or []:
-            EventTimelineSerializer(event=event, **timeline).save()
+        EventTimeline.objects.bulk_create([EventTimeline(event=event, **timeline) for timeline in event_timeline or []])
+        EventHost.objects.bulk_create([EventHost(event=event, **host) for host in event_hosts or []])
 
-        for hosts in event_hosts or []:
-            EventTimelineSerializer(event=event, **hosts).save()
+        return response
 
-        return event
-
+    @transaction.atomic
     def update(self, request, *args, **kwargs):
         event_timeline = request.data.get('event_timeline')
         event_hosts = request.data.get('event_hosts')
 
-        for timeline in event_timeline:
+        for timeline in event_timeline or []:
             instance = EventTimeline.objects.get(id=timeline['id'])
             timeline['event'] = instance.event
             EventTimelineSerializer(instance).update(instance, timeline)
 
-        for host in event_hosts:
+        for host in event_hosts or []:
             instance = EventHost.objects.get(id=host['id'])
             host['event'] = instance.event
             EventHostSerializer().update(instance, host)
 
         return super().update(request, *args, **kwargs)
+
+    @action(detail=False)
+    def get_my_events(self, request, *args, **kwargs):
+        events = request.user.is_authenticated and self.get_queryset().filter(user=request.user).values('id', 'name')
+        return Response([event for event in events or []])
 
 
 class EventTimelineViewSet(ModelViewSet):
