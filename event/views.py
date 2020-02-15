@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -55,3 +56,7 @@ class EventTimelineViewSet(ModelViewSet):
 class EventHostViewSet(ModelViewSet):
     queryset = EventHost.objects.all()
     serializer_class = EventHostSerializer
+
+
+def privacy_policy(request, *args, **kwargs):
+    return render(request, 'event/privacy_policy.html')

@@ -1,4 +1,4 @@
-"""digitalinviter URL Configuration
+"""event URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.routers import DefaultRouter
 
-from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet
+from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet, privacy_policy
 from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
 from themes.views import ThemeViewSet
@@ -36,6 +36,7 @@ router.register(r'theme', ThemeViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^', include(router.urls)),
+    re_path(r'^privacy-policy', privacy_policy),
     re_path(r'^accounts/', include('allauth.urls')),
     re_path(r'^api-auth/', include('rest_framework.urls')),
     re_path(r'^rest-auth/', include('rest_auth.urls')),
