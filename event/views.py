@@ -1,14 +1,10 @@
-import json
-
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import api_view, action
-from rest_framework.response import Response
 from django.db import transaction
-from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-
-from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer
 from event.models import Event, EventTimeline, EventHost
+from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer
 
 
 class EventViewSet(ModelViewSet):
