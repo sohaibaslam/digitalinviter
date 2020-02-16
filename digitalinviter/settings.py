@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nokiyl7z-gs47@4@pj*86*#)^l5pf&ts21)sw8gonmtf8ik9o9'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['digital-inviter-1578322617136.appspot.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -101,11 +101,11 @@ WSGI_APPLICATION = 'digitalinviter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'digitalinviter',
-        'USER': 'di',
-        'PASSWORD': 'digitalinviter',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
     }
 }
 
@@ -164,7 +164,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/static/'
+STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 
 LOGIN_REDIRECT_URL = "/"
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data')
+
+STATICFILES_DIRS = [
+    # TODO: configure the name and path to your development static directory
+    os.path.join(BASE_DIR, 'static'),  # static directory (in the top level directory) for local testing
+]
+

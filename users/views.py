@@ -15,4 +15,4 @@ class UserViewSet(ModelViewSet):
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
     client_class = OAuth2Client
-    callback_url = 'http://localhost:3000/home'
+    callback_url = 'https://localhost:3000/home'
