@@ -146,7 +146,7 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.User'
 
-SITE_ID = 2
+SITE_ID = 3
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

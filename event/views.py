@@ -9,7 +9,7 @@ from event.serializers import EventSerializer, EventTimelineSerializer, EventHos
 
 
 class EventViewSet(ModelViewSet):
-    queryset = Event.objects.filter(is_active=True)
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
 
     @transaction.atomic
