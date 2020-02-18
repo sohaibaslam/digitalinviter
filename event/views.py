@@ -42,10 +42,10 @@ class EventViewSet(ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-    @action(detail=False)
-    def get_my_events(self, request, *args, **kwargs):
-        events = request.user.is_authenticated and self.get_queryset().filter(user=request.user).values('id', 'name')
-        return Response([event for event in events or []])
+    def get_queryset(self):
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            return super().get_queryset()
+        return super().get_queryset().filter(user=self.request.user) if self.request.user.is_authenticated else []
 
 
 class EventTimelineViewSet(ModelViewSet):
