@@ -20,7 +20,7 @@ class EventHostSerializer(ModelSerializer):
 class EventSerializer(ModelSerializer):
     event_timeline = EventTimelineSerializer(many=True, read_only=True)
     event_hosts = EventHostSerializer(many=True, read_only=True)
-    theme = ThemeSerializer()
+    theme = ThemeSerializer(read_only=True)
 
     class Meta:
         model = Event

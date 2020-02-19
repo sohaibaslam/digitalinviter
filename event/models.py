@@ -18,6 +18,7 @@ class Event(models.Model):
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.groom} and {self.bride}"
