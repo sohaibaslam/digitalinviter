@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'digitalinviter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.environ.get('DB_HOST', '/cloudsql/digital-inviter-1578322617136:asia-south1:digital-inviter-db'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
         'NAME': os.environ.get('DB_NAME', 'digital-inviter-db'),
         'USER': os.environ.get('DB_USER', 'digitalinviter'),
