@@ -1,8 +1,6 @@
-from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from event.models import Event, EventTimeline, EventHost
-from themes.serializers import ThemeSerializer
+from event.models import Event, EventTimeline, EventHost, ThemeImage
 
 
 class EventTimelineSerializer(ModelSerializer):
@@ -20,8 +18,13 @@ class EventHostSerializer(ModelSerializer):
 class EventSerializer(ModelSerializer):
     event_timeline = EventTimelineSerializer(many=True, read_only=True)
     event_hosts = EventHostSerializer(many=True, read_only=True)
-    theme = ThemeSerializer(read_only=True)
 
     class Meta:
         model = Event
+        fields = '__all__'
+
+
+class ThemeImageSerializer(ModelSerializer):
+    class Meta:
+        model = ThemeImage
         fields = '__all__'

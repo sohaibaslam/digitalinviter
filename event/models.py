@@ -41,3 +41,10 @@ class EventHost(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ThemeImage(models.Model):
+    user = models.ForeignKey(User, related_name='theme_images', on_delete=models.DO_NOTHING)
+    event = models.ForeignKey(Event, related_name='theme_events', on_delete=models.DO_NOTHING)
+    image = models.ImageField(upload_to='themes')
+    image_name = models.CharField(max_length=50)

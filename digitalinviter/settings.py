@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'nokiyl7z-gs47@4@pj*86*#)^l5pf&ts21)sw8gonmtf8ik9o9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
-ALLOWED_HOSTS = ['digital-inviter-1578322617136.appspot.com']
+ALLOWED_HOSTS = ['*']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+
+    'django_cleanup',
 
     'sslserver',
     'corsheaders',
@@ -101,11 +103,11 @@ WSGI_APPLICATION = 'digitalinviter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', '/cloudsql/digital-inviter-1578322617136:asia-south1:digital-inviter-db'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': os.environ.get('DB_NAME', 'digital-inviter-db'),
+        'USER': os.environ.get('DB_USER', 'digitalinviter'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'iamsecure'),
     }
 }
 
@@ -168,12 +170,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "https://digitalinviter.com/loading"
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data')
 
-STATICFILES_DIRS = [
-    # TODO: configure the name and path to your development static directory
-    os.path.join(BASE_DIR, 'static'),  # static directory (in the top level directory) for local testing
-]
 
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'digital-inviter-data'

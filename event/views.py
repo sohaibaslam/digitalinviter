@@ -1,11 +1,12 @@
 from django.db import transaction
+from django.db.models import F
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from event.models import Event, EventTimeline, EventHost
-from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer
+from event.models import Event, EventTimeline, EventHost, ThemeImage
+from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer, ThemeImageSerializer
 
 
 class EventViewSet(ModelViewSet):
@@ -42,10 +43,13 @@ class EventViewSet(ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-    def get_queryset(self):
-        if self.request.user.is_authenticated and self.request.user.is_staff:
-            return super().get_queryset()
-        return super().get_queryset().filter(user=self.request.user) if self.request.user.is_authenticated else []
+    @action(detail=False)
+    def get_my_events(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return Response(self.get_queryset().filter(
+                user=request.user).values('name', 'id').annotate(template=F('theme__name')))
+
+        return Response([])
 
 
 class EventTimelineViewSet(ModelViewSet):
@@ -56,6 +60,11 @@ class EventTimelineViewSet(ModelViewSet):
 class EventHostViewSet(ModelViewSet):
     queryset = EventHost.objects.all()
     serializer_class = EventHostSerializer
+
+
+class ThemeImageViewSet(ModelViewSet):
+    serializer_class = ThemeImageSerializer
+    queryset = ThemeImage.objects.all()
 
 
 def privacy_policy(request, *args, **kwargs):

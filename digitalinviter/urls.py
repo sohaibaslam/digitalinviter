@@ -13,11 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import os
+
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 
-from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet, privacy_policy
+from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet, ThemeImageViewSet, privacy_policy
 from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
 from themes.views import ThemeViewSet
@@ -31,6 +35,7 @@ router.register(r'event_timeline', EventTimelineViewSet)
 router.register(r'event_host', EventHostViewSet)
 router.register(r'rsvp', RSVPViewSet)
 router.register(r'theme', ThemeViewSet)
+router.register(r'theme_image', ThemeImageViewSet)
 
 
 urlpatterns = [
@@ -43,3 +48,4 @@ urlpatterns = [
     re_path(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     re_path(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
 ]
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) if not os.environ.get('SECRET_KEY') else []

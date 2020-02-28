@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from event.models import Event, EventTimeline, EventHost
+from event.models import Event, EventTimeline, EventHost, ThemeImage
 
 
 class EventTimelineAdmin(admin.TabularInline):
@@ -19,4 +19,9 @@ class EventAdmin(admin.ModelAdmin):
     ]
 
 
+class ThemeImageAdmin(admin.ModelAdmin):
+    model = ThemeImage
+
+
 admin.site.register(Event, EventAdmin)
+admin.site.register(ThemeImage, ThemeImageAdmin)
