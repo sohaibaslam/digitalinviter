@@ -107,7 +107,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '5432'),
         'NAME': os.environ.get('DB_NAME', 'digital-inviter-db'),
         'USER': os.environ.get('DB_USER', 'digitalinviter'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'iamsecure'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'digitalinviter'),
     }
 }
 
