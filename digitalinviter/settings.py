@@ -105,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '5432'),
-        'NAME': os.environ.get('DB_NAME', 'digital-inviter-db'),
+        'NAME': os.environ.get('DB_NAME', 'digitalinviterdb'),
         'USER': os.environ.get('DB_USER', 'digitalinviter'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'digitalinviter'),
     }
