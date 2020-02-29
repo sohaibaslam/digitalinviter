@@ -172,7 +172,7 @@ STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 
 LOGIN_REDIRECT_URL = "https://digitalinviter.com/loading"
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data/static')
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
