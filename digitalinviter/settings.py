@@ -177,3 +177,4 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data/stat
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'digital-inviter-data'
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(os.path.dirname(BASE_DIR), '/bucketkey/bucket_key.json')
