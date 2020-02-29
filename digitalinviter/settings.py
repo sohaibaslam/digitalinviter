@@ -178,3 +178,4 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data/stat
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'digital-inviter-data'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/digitalinviter/digitalinviter-backend/bucketkey/bucket_key.json'
+GS_DEFAULT_ACL = 'publicRead'

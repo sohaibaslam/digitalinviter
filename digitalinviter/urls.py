@@ -48,4 +48,5 @@ urlpatterns = [
     re_path(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     re_path(r'^rest-auth/facebook/$', FacebookLogin.as_view(), name='fb_login'),
 ]
-# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) if not os.environ.get('SECRET_KEY') else []
+if os.environ.get('dev'):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
