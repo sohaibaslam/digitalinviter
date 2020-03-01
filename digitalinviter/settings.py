@@ -179,3 +179,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'digitalinviter'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/digitalinviter/digitalinviter-backend/bucketkey/bucket_key.json'
 GS_DEFAULT_ACL = 'publicRead'
+GS_FILE_OVERWRITE = False
