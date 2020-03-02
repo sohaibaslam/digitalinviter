@@ -18,7 +18,7 @@ class UserViewSet(ModelViewSet):
     @action(detail=False)
     def get_user_info(self, request, *args, **kwargs):
         user = self.get_queryset().filter(id=request.user.id).values('id', 'username', 'first_name',
-                                                                     'last_name', 'phone_number')
+                                                                     'last_name', 'phone_number', 'profile_url')
         return Response(user[0] if user else {})
 
     @action(['PUT'], detail=False)
