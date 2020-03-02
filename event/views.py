@@ -7,9 +7,10 @@ from rest_framework.viewsets import ModelViewSet
 
 from event.models import Event, EventTimeline, EventHost, ThemeImage
 from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer, ThemeImageSerializer
+from digitalinviter.utils import ObjectLevelPermissionMixin
 
 
-class EventViewSet(ModelViewSet):
+class EventViewSet(ModelViewSet, ObjectLevelPermissionMixin):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
