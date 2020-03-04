@@ -26,6 +26,7 @@ from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
 from themes.views import ThemeViewSet
 from users.views import FacebookLogin
+from greetings.views import GreetingsViewSet
 
 
 router = DefaultRouter()
@@ -35,6 +36,7 @@ router.register(r'users', UserViewSet)
 # router.register(r'event_host', EventHostViewSet)
 router.register(r'rsvp', RSVPViewSet)
 router.register(r'theme', ThemeViewSet)
+router.register(r'greeting', GreetingsViewSet)
 router.register(r'theme_image', ThemeImageViewSet)
 
 
