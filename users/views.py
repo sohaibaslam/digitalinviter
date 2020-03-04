@@ -5,13 +5,14 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import RetrieveModelMixin
 
 from users.models import User
 from users.serializers import UserSerializer
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSet(RetrieveModelMixin, GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 

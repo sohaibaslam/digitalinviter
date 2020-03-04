@@ -7,12 +7,13 @@ from rest_framework.viewsets import ModelViewSet
 
 from event.models import Event, EventTimeline, EventHost, ThemeImage
 from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer, ThemeImageSerializer
-from digitalinviter.utils import ObjectLevelPermissionMixin
+from digitalinviter.permissions import UserLevelPermission, EventLevelPermission
 
 
-class EventViewSet(ModelViewSet, ObjectLevelPermissionMixin):
+class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [UserLevelPermission]
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
@@ -66,6 +67,7 @@ class EventHostViewSet(ModelViewSet):
 class ThemeImageViewSet(ModelViewSet):
     serializer_class = ThemeImageSerializer
     queryset = ThemeImage.objects.all()
+    permission_classes = [UserLevelPermission, EventLevelPermission]
 
 
 def privacy_policy(request, *args, **kwargs):
