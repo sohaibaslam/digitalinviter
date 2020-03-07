@@ -23,6 +23,8 @@ LOGIN_REDIRECT_URL = "https://digitalinviter.com/loading"
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data/static')
 
+SITE_ID = 4
+
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'SCOPE': ['public_profile', 'user_photos'],
