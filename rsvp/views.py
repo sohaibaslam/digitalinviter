@@ -15,5 +15,5 @@ class RSVPViewSet(ModelViewSet, LoginRequiredMixin):
 
     @action(detail=True)
     def get_event_rsvp(self, request, pk=None):
-        greetings = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'is_attending')
-        return Response(greetings)
+        rsvp = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'is_attending')
+        return Response(rsvp)

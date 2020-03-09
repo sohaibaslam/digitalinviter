@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from event.models import Event, EventTimeline, EventHost, ThemeImage
+from themes.models import Theme
 from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer, ThemeImageSerializer
 from digitalinviter.permissions import UserLevelPermission, EventLevelPermission
 
@@ -44,6 +45,16 @@ class EventViewSet(ModelViewSet):
             EventHostSerializer().update(instance, host)
 
         return super().update(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        response = super().retrieve(request, *args, **kwargs)
+        theme_images = Theme.objects.get(id=response.data['theme']).configuration['images']
+        event_theme_images = ThemeImage.objects.filter(image_name__in=theme_images, event=response.data['id'])
+
+        config = {'theme_images': {image.image_name: image.image.url for image in event_theme_images}}
+        response.data['config'] = config.copy()
+
+        return response
 
     @action(detail=False)
     def get_my_events(self, request, *args, **kwargs):

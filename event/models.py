@@ -44,7 +44,6 @@ class EventHost(models.Model):
 
 
 class ThemeImage(models.Model):
-    user = models.ForeignKey(User, related_name='theme_images', on_delete=models.CASCADE)
     event = models.ForeignKey(Event, related_name='theme_events', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='themes')
     image_name = models.CharField(max_length=50)

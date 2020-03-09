@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'rsvp',
     'themes',
     'greetings',
+    'gallery',
+    'features',
 ]
 
 MIDDLEWARE = [
