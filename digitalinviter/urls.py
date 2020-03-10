@@ -21,7 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 
-from event.views import EventViewSet, EventTimelineViewSet, EventHostViewSet, ThemeImageViewSet, privacy_policy
+from event.views import (EventViewSet, EventTimelineViewSet, EventHostViewSet,
+                         ThemeImageViewSet, privacy_policy, InvitationViewSet)
 from rsvp.views import RSVPViewSet
 from users.views import UserViewSet
 from themes.views import ThemeViewSet
@@ -40,6 +41,7 @@ router.register(r'theme', ThemeViewSet)
 router.register(r'greeting', GreetingsViewSet)
 router.register(r'theme_image', ThemeImageViewSet)
 router.register(r'gallery', GalleryViewSet)
+router.register(r'invitation', InvitationViewSet)
 
 
 urlpatterns = [

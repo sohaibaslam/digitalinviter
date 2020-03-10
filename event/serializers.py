@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from event.models import Event, EventTimeline, EventHost, ThemeImage
+from event.models import Event, EventTimeline, EventHost, ThemeImage, Invitation
 
 
 class EventTimelineSerializer(ModelSerializer):
@@ -27,4 +27,10 @@ class EventSerializer(ModelSerializer):
 class ThemeImageSerializer(ModelSerializer):
     class Meta:
         model = ThemeImage
+        fields = '__all__'
+
+
+class InvitationSerializer(ModelSerializer):
+    class Meta:
+        model = Invitation
         fields = '__all__'

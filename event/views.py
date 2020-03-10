@@ -5,9 +5,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from event.models import Event, EventTimeline, EventHost, ThemeImage
+from event.models import Event, EventTimeline, EventHost, ThemeImage, Invitation
 from themes.models import Theme
-from event.serializers import EventSerializer, EventTimelineSerializer, EventHostSerializer, ThemeImageSerializer
+from event.serializers import (EventSerializer, EventTimelineSerializer, EventHostSerializer,
+                               ThemeImageSerializer, InvitationSerializer)
 from digitalinviter.permissions import UserLevelPermission, EventLevelPermission
 
 
@@ -80,6 +81,17 @@ class ThemeImageViewSet(ModelViewSet):
     serializer_class = ThemeImageSerializer
     queryset = ThemeImage.objects.all()
     permission_classes = [UserLevelPermission, EventLevelPermission]
+
+
+class InvitationViewSet(ModelViewSet):
+    serializer_class = InvitationSerializer
+    queryset = Invitation.objects.all()
+    permission_classes = [UserLevelPermission]
+
+    @action(methods=['GET'], detail=False)
+    def get_my_invitations(self, request, *args, **kwargs):
+        return Response(self.get_queryset().filter(user=request.user).values(
+            'event__id', 'event__name').annotate(template=F('event__theme__name')))
 
 
 def privacy_policy(request, *args, **kwargs):
