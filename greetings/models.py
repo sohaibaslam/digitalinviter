@@ -8,3 +8,6 @@ class Greeting(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     message = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return f'{self.user} | {self.event}'

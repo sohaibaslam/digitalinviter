@@ -9,3 +9,6 @@ class Gallery(models.Model):
     event = models.ForeignKey(Event, related_name='gallery_events', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='gallery')
     is_approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user} | {self.event} | {self.image.url}'

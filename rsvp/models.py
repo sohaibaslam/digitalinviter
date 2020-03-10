@@ -11,3 +11,6 @@ class RSVP(models.Model):
 
     class Meta:
         unique_together = ('user', 'event')
+
+    def __str__(self):
+        return f'{self.user} | {self.event}'

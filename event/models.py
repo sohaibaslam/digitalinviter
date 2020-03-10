@@ -2,11 +2,13 @@ from django.db import models
 
 from users.models import User
 from themes.models import Theme
+from digitalinviter.contants import Plans
 
 
 class Event(models.Model):
     user = models.ForeignKey(User, related_name='user_events', on_delete=models.CASCADE)
     theme = models.ForeignKey(Theme, related_name='theme_events', on_delete=models.DO_NOTHING, null=True, default=None)
+    plan = models.CharField(max_length=2, choices=Plans.choices, default=Plans.Basic)
     name = models.CharField(max_length=200)
     groom = models.CharField(max_length=100)
     bride = models.CharField(max_length=100)

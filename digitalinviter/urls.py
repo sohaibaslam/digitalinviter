@@ -27,6 +27,7 @@ from users.views import UserViewSet
 from themes.views import ThemeViewSet
 from users.views import FacebookLogin
 from greetings.views import GreetingsViewSet
+from gallery.views import GalleryViewSet
 
 
 router = DefaultRouter()
@@ -38,6 +39,7 @@ router.register(r'rsvp', RSVPViewSet)
 router.register(r'theme', ThemeViewSet)
 router.register(r'greeting', GreetingsViewSet)
 router.register(r'theme_image', ThemeImageViewSet)
+router.register(r'gallery', GalleryViewSet)
 
 
 urlpatterns = [
