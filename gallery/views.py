@@ -21,6 +21,8 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
         allowed_images = Feature.objects.get(plan=event.plan).features['album_images']
 
         if total_images < allowed_images:
+            if request.data['user'] == request.user.id:
+                request.data['is_approved'] = True
             return super().create(request, *args, **kwargs)
 
         return Response(data={'message': 'Album has reached maximum number of images.'})
@@ -28,4 +30,14 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
     @action(detail=True)
     def get_event_gallery(self, request, pk=None):
         gallery = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'image')
+        return Response(gallery)
+
+    def get_event_pending_gallery(self, request, pk=None):
+        gallery = self.get_queryset().filter(event=pk, is_approved=False).values(
+            'user__username',
+            'user__profile_url',
+            'image',
+            'id'
+        )
+
         return Response(gallery)
