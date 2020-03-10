@@ -13,6 +13,15 @@ class RSVPViewSet(ModelViewSet, LoginRequiredMixin):
     serializer_class = RSVPSerializer
     permission_classes = [UserLevelPermission, EventLevelPermission]
 
+    def create(self, request, *args, **kwargs):
+        rsvp = RSVP.objects.filter(user=request.data['user'], event=request.data['event']).first()
+        if rsvp:
+            rsvp.is_attending = request.data.get('is_attending') == 'true'
+            rsvp.save()
+            return Response(RSVPSerializer(rsvp).data)
+
+        return super().create(request, *args, **kwargs)
+
     @action(detail=True)
     def get_event_rsvp(self, request, pk=None):
         rsvp = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'is_attending')
