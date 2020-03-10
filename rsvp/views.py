@@ -11,7 +11,7 @@ from rsvp.models import RSVP
 class RSVPViewSet(ModelViewSet, LoginRequiredMixin):
     queryset = RSVP.objects.all()
     serializer_class = RSVPSerializer
-    permission_classes = [UserLevelPermission, EventLevelPermission]
+    permission_classes = [UserLevelPermission]
 
     def create(self, request, *args, **kwargs):
         rsvp = RSVP.objects.filter(user=request.data['user'], event=request.data['event']).first()
