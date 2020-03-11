@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.db.models import F
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -15,7 +16,7 @@ from digitalinviter.permissions import UserLevelPermission, EventLevelPermission
 class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = []  #UserLevelPermission
+    permission_classes = [UserLevelPermission]
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
@@ -102,6 +103,12 @@ class InvitationViewSet(ModelViewSet):
     serializer_class = InvitationSerializer
     queryset = Invitation.objects.all()
     permission_classes = [UserLevelPermission]
+
+    def create(self, request, *args, **kwargs):
+        if Invitation.objects.filter(user=request.data["user"], event=request.data["event"]):
+            return Response(status.HTTP_200_OK)
+
+        return super().create(request, *args, **kwargs)
 
     @action(methods=['GET'], detail=False)
     def get_my_invitations(self, request, *args, **kwargs):
