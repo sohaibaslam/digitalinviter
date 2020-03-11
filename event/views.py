@@ -44,7 +44,7 @@ class EventViewSet(ModelViewSet):
                 instance = EventTimeline.objects.get(id=timeline_id)
                 EventTimelineSerializer(instance).update(instance, timeline)
             else:
-                timeline_serializer = EventHostSerializer(data=timeline)
+                timeline_serializer = EventTimelineSerializer(data=timeline)
                 if timeline_serializer.is_valid(raise_exception=True):
                     timeline_serializer.save()
 
