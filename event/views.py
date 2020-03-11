@@ -15,7 +15,7 @@ from digitalinviter.permissions import UserLevelPermission, EventLevelPermission
 class EventViewSet(ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    permission_classes = [UserLevelPermission]
+    permission_classes = []  #UserLevelPermission
 
     @transaction.atomic
     def create(self, request, *args, **kwargs):
@@ -32,18 +32,33 @@ class EventViewSet(ModelViewSet):
 
     @transaction.atomic
     def update(self, request, *args, **kwargs):
-        event_timeline = request.data.get('event_timeline')
-        event_hosts = request.data.get('event_hosts')
+        event = Event.objects.get(id=request.data['event_id'])
+        event_timeline = request.data.pop('event_timeline', [])
+        event_hosts = request.data.pop('event_hosts', [])
 
         for timeline in event_timeline or []:
-            instance = EventTimeline.objects.get(id=timeline['id'])
-            timeline['event'] = instance.event
-            EventTimelineSerializer(instance).update(instance, timeline)
+            timeline_id = timeline.get('id')
+            timeline['event'] = event if timeline_id else request.data["event_id"]
+
+            if timeline_id:
+                instance = EventTimeline.objects.get(id=timeline_id)
+                EventTimelineSerializer(instance).update(instance, timeline)
+            else:
+                timeline_serializer = EventHostSerializer(data=timeline)
+                if timeline_serializer.is_valid(raise_exception=True):
+                    timeline_serializer.save()
 
         for host in event_hosts or []:
-            instance = EventHost.objects.get(id=host['id'])
-            host['event'] = instance.event
-            EventHostSerializer().update(instance, host)
+            host_id = host.get('id')
+            host['event'] = event if host_id else request.data["event_id"]
+
+            if host_id:
+                instance = EventHost.objects.get(id=host['id'])
+                EventHostSerializer().update(instance, host)
+            else:
+                host_serializer = EventHostSerializer(data=host)
+                if host_serializer.is_valid(raise_exception=True):
+                    host_serializer.save()
 
         return super().update(request, *args, **kwargs)
 
