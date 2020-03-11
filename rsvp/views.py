@@ -25,18 +25,11 @@ class RSVPViewSet(ModelViewSet, LoginRequiredMixin):
 
     @action(detail=True)
     def get_event_rsvp(self, request, pk=None):
-        rsvp = self.get_queryset().filter(event=pk).values(
-            'user__username', 'user__profile_url', 'is_attending').annotate(
-            attending=Count(
-                Case(
-                    When(is_attending=True, then=1)
-                )
-            ),
-            not_attending=Count(
-                Case(
-                    When(is_attending=False, then=1)
-                )
-            )
-        )
+        rsvp = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'is_attending')
+        output = {
+            'rsvp': rsvp,
+            'attending': self.get_queryset().filter(event=pk, is_attending=True).count(),
+            'not_attending': self.get_queryset().filter(event=pk, is_attending=False).count(),
+        }
 
-        return Response(rsvp)
+        return Response(data=output)
