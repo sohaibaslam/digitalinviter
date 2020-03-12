@@ -19,7 +19,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 
-LOGIN_REDIRECT_URL = "https://digitalinviter.com/loading"
+LOGIN_REDIRECT_URL = "https://digitalinviter.com/login"
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'digital-inviter-data/static')
 
