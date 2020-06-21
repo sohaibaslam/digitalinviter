@@ -29,7 +29,7 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
 
     @action(detail=True)
     def get_event_gallery(self, request, pk=None):
-        gallery = self.get_queryset().filter(event=pk).values('user__username', 'user__profile_url', 'image')
+        gallery = self.get_queryset().filter(event=pk).values('id', 'user__username', 'user__profile_url', 'image')
         return Response(gallery)
 
     def get_event_pending_gallery(self, request, pk=None):
