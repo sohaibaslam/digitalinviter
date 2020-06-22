@@ -1,6 +1,7 @@
 from rest_framework import permissions
 
 from event.models import Event
+from gallery.models import GalleryPermissions
 
 
 class UserLevelPermission(permissions.BasePermission):
@@ -20,3 +21,9 @@ class EventLevelPermission(permissions.BasePermission):
             return not event or request.user.id == event.user.id
 
         return True
+
+
+class GalleryPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        event_id = view.kwargs.get('pk')
+        return GalleryPermissions.objects.filter(event_id=event_id, user=request.user)
