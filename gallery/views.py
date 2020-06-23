@@ -27,14 +27,13 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
 
         return Response(data={'message': 'Album has reached maximum number of images.'})
 
-    @action(detail=True, url_path='(?P<event_pk>[^/.]+)/get_event_gallery')
-    def get_event_gallery(self, request, pk=None, event_pk=None):
-        gallery = self.get_queryset().filter(event=event_pk).values('id', 'user__username', 'user__profile_url', 'image')
+    @action(detail=True)
+    def get_event_gallery(self, request, pk=None):
+        gallery = self.get_queryset().filter(event=pk).values('id', 'user__username', 'user__profile_url', 'image')
         return Response(gallery)
 
-    @action(detail=True, url_path='(?P<event_pk>[^/.]+)/get_event_pending_gallery')
-    def get_event_pending_gallery(self, request, pk=None, event_pk=None):
-        gallery = self.get_queryset().filter(event=event_pk, is_approved=False).values(
+    def get_event_pending_gallery(self, request, pk=None):
+        gallery = self.get_queryset().filter(event=pk, is_approved=False).values(
             'user__username',
             'user__profile_url',
             'image',
@@ -53,6 +52,6 @@ class GalleryPermissionViewSet(ModelViewSet, LoginRequiredMixin):
     def get_event_gallery_permission(self, request, pk=None):
         event = Event.objects.get(id=pk)
         data = GalleryPermissions.objects.filter(event=event, is_allowed=False).values(
-            'user_id', 'user__username', 'user__profile_url', 'event_id'
+            'id', 'user_id', 'user__username', 'user__profile_url', 'event_id'
         )
         return Response(data)

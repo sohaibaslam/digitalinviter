@@ -13,8 +13,8 @@ class UserLevelPermission(permissions.BasePermission):
 
 
 class EventLevelPermission(permissions.BasePermission):
-    def has_permission(self, request, view, all_methods=False):
-        if all_methods or request.method not in permissions.SAFE_METHODS:
+    def has_permission(self, request, view):
+        if request.method not in permissions.SAFE_METHODS:
             event_id = request.data.get('event')
             event = event_id and Event.objects.filter(id=event_id).first()
 
@@ -25,13 +25,11 @@ class EventLevelPermission(permissions.BasePermission):
 
 class GalleryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        event_id = view.kwargs.get('event_pk')
+        if request.method not in permissions.SAFE_METHODS:
+            return True
+
+        event_id = view.kwargs.get('pk')
         event = Event.objects.filter(id=event_id).first()
 
-        if not event:
-            gallery_id = view.kwargs.get('pk')
-            gallery = Gallery.objects.filter(id=gallery_id).first()
-            event = gallery and gallery.event
-
-        event_permission = (event and request.user.id == event.user.id) or request.user.is_superuser
+        event_permission = (event and request.user.id == event.user.id) #or request.user.is_superuser
         return event_permission or GalleryPermissions.objects.filter(event=event, user=request.user)
