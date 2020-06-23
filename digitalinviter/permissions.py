@@ -31,5 +31,5 @@ class GalleryPermission(permissions.BasePermission):
         event_id = view.kwargs.get('pk')
         event = Event.objects.filter(id=event_id).first()
 
-        event_permission = (event and request.user.id == event.user.id) #or request.user.is_superuser
+        event_permission = (event and request.user.id == event.user.id) or request.user.is_superuser
         return event_permission or GalleryPermissions.objects.filter(event=event, user=request.user)
