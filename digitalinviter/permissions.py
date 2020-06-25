@@ -1,7 +1,7 @@
 from rest_framework import permissions
 
 from event.models import Event
-from gallery.models import Gallery, GalleryPermissions
+from gallery.models import GalleryPermissions
 
 
 class UserLevelPermission(permissions.BasePermission):
@@ -32,4 +32,4 @@ class GalleryPermission(permissions.BasePermission):
         event = Event.objects.filter(id=event_id).first()
 
         event_permission = (event and request.user.id == event.user.id) or request.user.is_superuser
-        return event_permission or GalleryPermissions.objects.filter(event=event, user=request.user)
+        return event_permission or GalleryPermissions.objects.filter(event=event, user_id=request.user.id)
