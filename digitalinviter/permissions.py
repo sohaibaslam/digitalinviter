@@ -32,4 +32,4 @@ class GalleryPermission(permissions.BasePermission):
         event = Event.objects.filter(id=event_id).first()
 
         event_permission = (event and request.user.id == event.user.id) or request.user.is_superuser
-        return event_permission or GalleryPermissions.objects.filter(event=event, user_id=request.user.id)
+        return event_permission or GalleryPermissions.objects.filter(event=event, user_id=request.user.id, is_allowed=True)
