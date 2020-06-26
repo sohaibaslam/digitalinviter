@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from digitalinviter.permissions import UserLevelPermission, GalleryPermission
+from digitalinviter.permissions import UserLevelPermission, GalleryPermission, EventLevelPermission
 from gallery.serializers import GallerySerializer, GalleryPermissionSerializer
 from gallery.models import Gallery, GalleryPermissions
 from features.models import Feature
@@ -46,7 +46,7 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
 class GalleryPermissionViewSet(ModelViewSet, LoginRequiredMixin):
     queryset = GalleryPermissions.objects.all()
     serializer_class = GalleryPermissionSerializer
-    permission_classes = [UserLevelPermission]
+    permission_classes = [EventLevelPermission]
 
     @action(detail=True)
     def get_event_gallery_permission(self, request, pk=None):
