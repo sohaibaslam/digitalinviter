@@ -18,3 +18,6 @@ class GalleryPermissions(models.Model):
     user = models.ForeignKey(User, related_name='user_gallery_permissions', on_delete=models.CASCADE)
     event = models.ForeignKey(Event, related_name='event_gallery_permissions', on_delete=models.CASCADE)
     is_allowed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('user', 'event'),)
