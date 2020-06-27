@@ -46,7 +46,7 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
 class GalleryPermissionViewSet(ModelViewSet, LoginRequiredMixin):
     queryset = GalleryPermissions.objects.all()
     serializer_class = GalleryPermissionSerializer
-    permission_classes = [EventLevelPermission]
+    permission_classes = [UserLevelPermission]
 
     @action(detail=True)
     def get_event_gallery_permission(self, request, pk=None):
