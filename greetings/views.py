@@ -18,5 +18,5 @@ class GreetingsViewSet(ModelViewSet):
         if not Event.objects.filter(id=pk).filter(user=self.request.user):
             query = query.filter(Q(is_approved=True) | Q(user=self.request.user))
 
-        greetings = query.values('user__username', 'user__profile_url', 'message')
+        greetings = query.values('user__username', 'user__profile_url', 'message', 'is_approved')
         return Response(greetings)
