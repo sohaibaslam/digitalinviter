@@ -15,8 +15,11 @@ class GreetingsViewSet(ModelViewSet):
     @action(detail=True)
     def get_event_greetings(self, request, pk=None):
         query = self.get_queryset().filter(event=pk)
-        if not Event.objects.filter(id=pk).filter(user=self.request.user):
-            query = query.filter(Q(is_approved=True) | Q(user=self.request.user))
+
+        if not request.user.is_authenticated:
+            query = query.filter(is_approved=True)
+        elif not Event.objects.filter(id=pk).filter(user=request.user):
+            query = query.filter(Q(is_approved=True) | Q(user=request.user))
 
         greetings = query.values('user__username', 'user__profile_url', 'message', 'is_approved')
         return Response(greetings)
