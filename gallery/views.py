@@ -30,8 +30,19 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
 
     @action(detail=True)
     def get_event_gallery(self, request, pk=None):
-        gallery = self.get_queryset().filter(event=pk).values('id', 'user__username', 'user__profile_url', 'image')
-        return Response(gallery)
+        offset = int(request.GET.get('offset', 0))
+        limit = 6
+
+        galleries = self.get_queryset().filter(event=pk).values('id', 'user__username', 'user__profile_url', 'image')
+        total = galleries.count()
+        gallery = [gallery for gallery in galleries][offset:offset+limit]
+
+        output = {
+            'total': total,
+            'gallery': gallery,
+            'next': offset+limit if total-offset > limit else None
+        }
+        return Response(output)
 
     def get_event_pending_gallery(self, request, pk=None):
         gallery = self.get_queryset().filter(event=pk, is_approved=False).values(
