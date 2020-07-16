@@ -31,7 +31,7 @@ class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
     @action(detail=True)
     def get_event_gallery(self, request, pk=None):
         offset = int(request.GET.get('offset', 0))
-        limit = 2
+        limit = 6
 
         galleries = self.get_queryset().filter(event=pk).values('id', 'user__username', 'user__profile_url', 'image')
         total = galleries.count()
