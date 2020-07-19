@@ -19,9 +19,6 @@ class GalleryAccessPermission(permissions.BasePermission):
                 return not request.data.get('user') or request.user.id == int(request.data['user'])
             else:
                 event_id = request.data.get('event')
-                if event_id == 50:
-                    return True
-
                 event = event_id and Event.objects.filter(id=event_id).first()
 
                 return not event or request.user.id == event.user.id
@@ -46,6 +43,9 @@ class GalleryPermission(permissions.BasePermission):
             return True
 
         event_id = view.kwargs.get('pk')
+        if event_id == 50:
+            return True
+
         event = Event.objects.filter(id=event_id).first()
 
         event_permission = (event and request.user.id == event.user.id) or request.user.is_superuser
