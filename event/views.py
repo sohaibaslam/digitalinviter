@@ -71,7 +71,7 @@ class EventViewSet(ModelViewSet):
         config = {'theme_images': {image.image_name: image.image.url for image in event_theme_images}}
         response.data['config'] = config.copy()
         response.data['is_owner'] = response.data['user'] == request.user.id
-        response.data['contact_number'] = response.user.phone_number
+        response.data['contact_number'] = request.user.phone_number
 
         return response
 
