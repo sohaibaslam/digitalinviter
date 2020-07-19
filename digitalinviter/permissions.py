@@ -43,7 +43,7 @@ class GalleryPermission(permissions.BasePermission):
             return True
 
         event_id = view.kwargs.get('pk')
-        if event_id == 50:
+        if event_id == '50':
             return True
 
         event = Event.objects.filter(id=event_id).first()
