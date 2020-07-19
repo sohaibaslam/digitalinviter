@@ -11,7 +11,7 @@ from features.models import Feature
 from event.models import Event
 
 
-class GalleryViewSet(ModelViewSet, LoginRequiredMixin):
+class GalleryViewSet(ModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
     permission_classes = [UserLevelPermission, GalleryPermission]
