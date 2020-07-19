@@ -19,9 +19,12 @@ class GalleryAccessPermission(permissions.BasePermission):
                 return not request.data.get('user') or request.user.id == int(request.data['user'])
             else:
                 event_id = request.data.get('event')
+                if event_id == 50:
+                    return True
+
                 event = event_id and Event.objects.filter(id=event_id).first()
 
-                return not event or event.id == 50 or request.user.id == event.user.id
+                return not event or request.user.id == event.user.id
 
         return True
 
