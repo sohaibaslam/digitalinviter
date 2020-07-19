@@ -29,8 +29,8 @@ class EventViewSet(ModelViewSet):
         EventTimeline.objects.bulk_create([EventTimeline(event=event, **timeline) for timeline in event_timeline or []])
         EventHost.objects.bulk_create([EventHost(event=event, **host) for host in event_hosts or []])
 
-        if request.data.get('contact_number'):
-            request.user.phone_number = request.data.get('contact_number')
+        if request.data.get('contact'):
+            request.user.phone_number = request.data.get('contact')
             request.user.save()
 
         return response
@@ -65,8 +65,8 @@ class EventViewSet(ModelViewSet):
                 if host_serializer.is_valid(raise_exception=True):
                     host_serializer.save()
 
-        if request.data.get('contact_number'):
-            request.user.phone_number = request.data.get('contact_number')
+        if request.data.get('contact'):
+            request.user.phone_number = request.data.get('contact')
             request.user.save()
 
         return super().update(request, *args, **kwargs)
