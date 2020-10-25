@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'greetings',
     'gallery',
     'features',
+    'gift_registry',
 ]
 
 MIDDLEWARE = [

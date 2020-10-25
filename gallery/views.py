@@ -1,14 +1,13 @@
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from digitalinviter.permissions import UserLevelPermission, GalleryPermission, EventLevelPermission, \
-    GalleryAccessPermission
-from gallery.serializers import GallerySerializer, GalleryPermissionSerializer
-from gallery.models import Gallery, GalleryPermissions
-from features.models import Feature
+from digitalinviter.permissions import UserLevelPermission, GalleryPermission, GalleryAccessPermission
 from event.models import Event
+from features.models import Feature
+from gallery.models import Gallery, GalleryPermissions
+from gallery.serializers import GallerySerializer, GalleryPermissionSerializer
 
 
 class GalleryViewSet(ModelViewSet):
