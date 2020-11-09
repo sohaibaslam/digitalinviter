@@ -30,7 +30,7 @@ class EventTimeline(models.Model):
     event = models.ForeignKey(Event, related_name='event_timeline', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     time = models.TimeField()
-    description = models.CharField(max_length=100, blank=True, null=True)
+    description = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.name
