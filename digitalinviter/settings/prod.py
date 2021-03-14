@@ -7,17 +7,17 @@ from digitalinviter.settings.common import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
-        'NAME': os.environ.get('DB_NAME', 'digitalinviterdb'),
-        'USER': os.environ.get('DB_USER', 'digitalinviter'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'digitalinviter'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
     }
 }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATIC_URL = os.environ.get('STATIC_URL', '/static/')
+STATIC_URL = os.environ.get('STATIC_URL')
 
 LOGIN_REDIRECT_URL = "https://digitalinviter.com/login"
 
