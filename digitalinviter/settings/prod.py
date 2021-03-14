@@ -32,7 +32,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'digitalinviter2'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/digitalinviter/digitalinviter-backend/bucketkey/bucket_key.json'
+GS_BUCKET_NAME = os.environ['GS_BUCKET_NAME']
+
+# GCP bucket_key.json set by venv
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+
 GS_DEFAULT_ACL = 'publicRead'
 GS_FILE_OVERWRITE = False
